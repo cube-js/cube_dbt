@@ -1,0 +1,26 @@
+[project]
+name = "cube_dbt"
+version = "0.1.0"
+description = "dbt integration for Cube"
+authors = [
+    {name = "Artyom Keydunov", email = "artyom@cube.dev"},
+    {name = "Igor Lukanin", email = "igor@cube.dev"},
+]
+dependencies = [
+    "PyYAML>=6.0.1",
+]
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.scripts]
+test = "pytest tests/"
+
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=7.4.2",
+]
