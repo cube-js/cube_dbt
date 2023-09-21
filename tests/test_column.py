@@ -47,7 +47,8 @@ class TestColumn:
       'name': 'column',
       'description': '',
       'meta': {},
-      'data_type': 'numeric'
+      'data_type': 'numeric',
+      'tags': []
     }
     column = Column('model', column_dict)
     assert column._as_dimension() == {
@@ -61,7 +62,8 @@ class TestColumn:
       'name': 'column',
       'description': '',
       'meta': {},
-      'data_type': 'numeric'
+      'data_type': 'numeric',
+      'tags': []
     }
     column = Column('model', column_dict)
     assert column.as_dimension() == """name: column

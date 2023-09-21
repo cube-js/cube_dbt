@@ -45,25 +45,29 @@ class Column:
     return self._column_dict['meta']
   
   @property
-  def tests(self) -> list[str]:
-    return self._column_dict['tests'] if 'tests' in self._column_dict else []
+  def primary_key(self) -> bool:
+    """
+    Convention: if the column is marked with the 'primary_key' tag,
+    it will be mapped to a primary key dimension
+    """
+    return 'primary_key' in self._column_dict['tags']
 
-  def _as_dimension(self, primary_key=False) -> dict:
+  def _as_dimension(self) -> dict:
     data = {}
     data['name'] = self.name
     if self.description:
       data['description'] = self.description
     data['sql'] = self.sql
     data['type'] = self.type
-    if primary_key:
+    if self.primary_key:
       data['primary_key'] = True
     if self.meta:
       data['meta'] = self.meta
     return data
   
-  def as_dimension(self, primary_key=False) -> str:
+  def as_dimension(self) -> str:
     """
     For use in Jinja:
     {{ dbt.model('name').column('name').as_dimension() }}
     """
-    return dump(self._as_dimension(primary_key), indent=8)
+    return dump(self._as_dimension(), indent=8)

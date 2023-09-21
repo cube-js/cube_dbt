@@ -1,3 +1,4 @@
+from pytest import raises
 from cube_dbt import Model
 
 class TestModel:
@@ -40,10 +41,10 @@ class TestModel:
     model = Model(model_dict)
     assert model.sql_table == '`db_2`.`schema_2`.`alias_2`'
 
-  def test_detect_primary_key_one_column(self):
+  def test_detect_primary_key_no_columns(self):
     """
-    If model has one and only one column with 'not null'
-    and 'unique' tests, then use it as a primary key
+    If a model has no columns with a 'primary key'
+    tag, then detect no primary keys
     """
     model_dict = {
       'name': 'model',
@@ -51,14 +52,37 @@ class TestModel:
         'id': {
           'name': 'id',
           'data_type': 'numeric',
-          'tests': [
-            'unique',
-            'not_null'
+          'tags': []
+        },
+        'status': {
+          'name': 'status',
+          'data_type': None,
+          'tags': []
+        }
+      }
+    }
+    model = Model(model_dict)
+    assert model.primary_key == None
+
+  def test_detect_primary_key_one_column(self):
+    """
+    If a model has one and only one column with a 'primary key'
+    tag, then use it as a primary key
+    """
+    model_dict = {
+      'name': 'model',
+      'columns': {
+        'id': {
+          'name': 'id',
+          'data_type': 'numeric',
+          'tags': [
+            'primary_key'
           ]
         },
         'status': {
           'name': 'status',
-          'data_type': None
+          'data_type': None,
+          'tags': []
         }
       }
     }
@@ -68,8 +92,8 @@ class TestModel:
 
   def test_detect_primary_key_two_columns(self):
     """
-    If model has more than one column with 'not null'
-    and 'unique' tests, then don't detect any primary key at all
+    If a model has more than one column with a 'primary_key'
+    tag, then raise an exception
     """
     model_dict = {
       'name': 'model',
@@ -77,23 +101,22 @@ class TestModel:
         'id': {
           'name': 'id',
           'data_type': 'numeric',
-          'tests': [
-            'unique',
-            'not_null'
+          'tags': [
+            'primary_key'
           ]
         },
         'status': {
           'name': 'status',
           'data_type': None,
-          'tests': [
-            'unique',
-            'not_null'
+          'tags': [
+            'primary_key'
           ]
         }
       }
     }
     model = Model(model_dict)
-    assert model.primary_key == None
+    with raises(RuntimeError):
+      model.primary_key
 
   def test_as_cube(self):
     model_dict = {
@@ -130,13 +153,15 @@ class TestModel:
           'name': 'id',
           'description': '',
           'meta': {},
-          'data_type': 'numeric'
+          'data_type': 'numeric',
+          'tags': []
         },
         'status': {
           'name': 'status',
           'description': '',
           'meta': {},
-          'data_type': None
+          'data_type': None,
+          'tags': []
         }
       }
     }
@@ -163,16 +188,16 @@ class TestModel:
           'description': '',
           'meta': {},
           'data_type': 'numeric',
-          'tests': [
-            'not_null',
-            'unique'
+          'tags': [
+            'primary_key'
           ]
         },
         'status': {
           'name': 'status',
           'description': '',
           'meta': {},
-          'data_type': None
+          'data_type': None,
+          'tags': []
         }
       }
     }
@@ -200,16 +225,16 @@ class TestModel:
           'description': '',
           'meta': {},
           'data_type': 'numeric',
-          'tests': [
-            'not_null',
-            'unique'
+          'tags': [
+            'primary_key'
           ]
         },
         'status': {
           'name': 'status',
           'description': '',
           'meta': {},
-          'data_type': None
+          'data_type': None,
+          'tags': []
         }
       }
     }

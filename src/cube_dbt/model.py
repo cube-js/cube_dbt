@@ -21,8 +21,13 @@ class Model:
   def _detect_primary_key(self) -> None:
     candidates = list(
       column for column in self._columns
-      if 'unique' in column.tests and 'not_null' in column.tests
+      if column.primary_key
     )
+
+    if len(candidates) > 1:
+      column_names = list(column.name for column in candidates)
+      raise RuntimeError(f"More than one primary key column found in {self.name}: {', '.join(column_names)}")
+
     self._primary_key = candidates[0] if len(candidates) == 1 else None
   
   @property
@@ -74,7 +79,7 @@ class Model:
   
   def _as_dimensions(self) -> list:
     return list(
-      column._as_dimension(column == self.primary_key)
+      column._as_dimension()
       for column in self.columns
     )
   
