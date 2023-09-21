@@ -4,17 +4,9 @@ from pytest import raises
 from cube_dbt import Dbt
 
 class TestDbt:
-  def test_manifest_not_loaded(self):
-    """
-    If manifest wasn't loaded, then raise an exception
-    """
-    dbt = Dbt()
-    with raises(RuntimeError):
-      dbt.models
-
   def test_from_file(self):
     directory_path = os.path.dirname(os.path.realpath(__file__))
-    dbt = Dbt().from_file(directory_path + '/manifest.json')
+    dbt = Dbt.from_file(directory_path + '/manifest.json')
     model_names = list(model.name for model in dbt.models)
     assert model_names == [
       'users_copy',
@@ -116,7 +108,7 @@ class TestDbt:
         }
       }
     }
-    dbt = Dbt(manifest, path_prefix='marts/')
+    dbt = Dbt(manifest).filter(path_prefix='marts/')
     model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy_2']
 
@@ -145,7 +137,7 @@ class TestDbt:
         }
       }
     }
-    dbt = Dbt(manifest, tags=['cube'])
+    dbt = Dbt(manifest).filter(tags=['cube'])
     model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy']
 
@@ -170,7 +162,7 @@ class TestDbt:
         }
       }
     }
-    dbt = Dbt(manifest, names=['users_copy_2'])
+    dbt = Dbt(manifest).filter(names=['users_copy_2'])
     model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy_2']
 
