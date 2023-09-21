@@ -71,4 +71,4 @@ def model_as_dimensions(model: Model) -> str:
   """
   For use in Jinja
   """
-  return dump(_model_as_dimensions(model), indent=4)
+  return dump(_model_as_dimensions(model), indent=6)

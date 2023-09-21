@@ -241,10 +241,10 @@ class TestModel:
       }
     }
     assert model_as_dimensions(model) == """- name: id
-      sql: id
-      type: number
-      primary_key: true
-    - name: status
-      sql: status
-      type: string
-    """
+        sql: id
+        type: number
+        primary_key: true
+      - name: status
+        sql: status
+        type: string
+      """
