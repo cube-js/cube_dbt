@@ -15,7 +15,7 @@ manifest_url = 'https://bucket.s3.amazonaws.com/manifest.json'
 dbt = Dbt
   .from_url(manifest_url)
   .filter(
-    path_prefix='merts/',
+    path_prefix='marts/',
     tags=['cube'],
     names=['my_table', 'my_table_2']
   )
