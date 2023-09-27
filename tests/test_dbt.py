@@ -87,7 +87,7 @@ class TestDbt:
       'users_copy_3'
     ]
 
-  def test_load_models_by_path_prefix(self):
+  def test_load_models_by_path(self):
     manifest = {
       'nodes': {
         'model.jaffle_shop.users_copy': {
@@ -108,7 +108,7 @@ class TestDbt:
         }
       }
     }
-    dbt = Dbt(manifest).filter(path_prefix='marts/')
+    dbt = Dbt(manifest).filter(paths=['marts/'])
     model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy_2']
 
