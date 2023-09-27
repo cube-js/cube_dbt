@@ -1,71 +1,72 @@
 from pytest import raises
-from cube_dbt import (
-  Column,
-  column_type,
-  column_as_dimension
-)
-from cube_dbt.column import _column_as_dimension
+from cube_dbt import Column
 
 class TestColumn:
   def test_no_type(self):
     """
     If no type, then assume 'string'
     """
-    column = {}
-    assert column_type(column) == 'string'
+    column_dict = {}
+    column = Column('model', column_dict)
+    assert column.type == 'string'
 
   def test_none_type(self):
     """
     If type is None, then assume 'string'
     """
-    column = {
+    column_dict = {
       'data_type': None
     }
-    assert column_type(column) == 'string'
+    column = Column('model', column_dict)
+    assert column.type == 'string'
 
   def test_unknown_type(self):
     """
     If type is unknown, then raise an exception
     """
-    column = {
+    column_dict = {
       'name': 'column',
       'data_type': 'unknown'
     }
+    column = Column('model', column_dict)
     with raises(RuntimeError):
-      column_type(column)
+      column.type
 
   def test_known_type(self):
     """
     If type is known, then map it
     """
-    column = {
+    column_dict = {
       'data_type': 'numeric'
     }
-    assert column_type(column) == 'number'
+    column = Column('model', column_dict)
+    assert column.type == 'number'
 
   def test_as_dimension(self):
-    column = {
+    column_dict = {
       'name': 'column',
       'description': '',
       'meta': {},
       'data_type': 'numeric',
       'tags': []
     }
-    assert _column_as_dimension(column) == {
+    column = Column('model', column_dict)
+    assert column._as_dimension() == {
       'name': 'column',
       'sql': 'column',
       'type': 'number'
     }
 
   def test_as_dimension_render(self):
-    column = {
+    column_dict = {
       'name': 'column',
       'description': '',
       'meta': {},
       'data_type': 'numeric',
       'tags': []
     }
-    assert column_as_dimension(column) == """name: column
+    column = Column('model', column_dict)
+    assert column.as_dimension() == """name: column
         sql: column
         type: number
         """

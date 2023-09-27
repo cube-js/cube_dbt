@@ -12,22 +12,19 @@ pip install cube_dbt
 
 ```python
 manifest_url = 'https://bucket.s3.amazonaws.com/manifest.json'
-manifest = load_dbt_manifest_from_url(manifest_url)
-models = dbt_models(
-  manifest,
-  path_prefix='marts/',
-  tags=['cube'],
-  names=['my_table', 'my_table_2']
-)
-print(models)
+dbt = Dbt
+  .from_url(manifest_url)
+  .filter(
+    path_prefix='marts/',
+    tags=['cube'],
+    names=['my_table', 'my_table_2']
+  )
+print(dbt.models)
 
 # For use in Jinja templates:
-model = dbt_model(models, 'name')
-print(model_as_cube(model))
-print(model_as_dimensions(model))
-
-column = model_column(model, 'name')
-print(column_as_dimension(column))
+print(dbt.model('name').as_cube())
+print(dbt.model('name').as_dimensions())
+print(dbt.model('name').column('name').as_dimension())
 ```
 
 ## Development

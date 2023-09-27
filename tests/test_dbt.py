@@ -1,18 +1,13 @@
 import os 
 
-from cube_dbt import (
-  load_dbt_manifest_from_file,
-  dbt_models,
-  dbt_model,
-  model_name
-)
+from pytest import raises
+from cube_dbt import Dbt
 
 class TestDbt:
   def test_from_file(self):
     directory_path = os.path.dirname(os.path.realpath(__file__))
-    manifest = load_dbt_manifest_from_file(directory_path + '/manifest.json')
-    models = dbt_models(manifest)
-    model_names = list(model_name(model) for model in models)
+    dbt = Dbt.from_file(directory_path + '/manifest.json')
+    model_names = list(model.name for model in dbt.models)
     assert model_names == [
       'users_copy',
       'orders_copy',
@@ -40,8 +35,8 @@ class TestDbt:
         }
       }
     }
-    models = dbt_models(manifest)
-    model_names = list(model_name(model) for model in models)
+    dbt = Dbt(manifest)
+    model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy']
 
   def test_do_not_load_ephemeral_models(self):
@@ -84,8 +79,8 @@ class TestDbt:
         }
       }
     }
-    models = dbt_models(manifest)
-    model_names = list(model_name(model) for model in models)
+    dbt = Dbt(manifest)
+    model_names = list(model.name for model in dbt.models)
     assert model_names == [
       'users_copy',
       'users_copy_2',
@@ -113,8 +108,8 @@ class TestDbt:
         }
       }
     }
-    models = dbt_models(manifest, path_prefix='marts/')
-    model_names = list(model_name(model) for model in models)
+    dbt = Dbt(manifest).filter(path_prefix='marts/')
+    model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy_2']
 
   def test_load_models_by_tag(self):
@@ -142,8 +137,8 @@ class TestDbt:
         }
       }
     }
-    models = dbt_models(manifest, tags=['cube'])
-    model_names = list(model_name(model) for model in models)
+    dbt = Dbt(manifest).filter(tags=['cube'])
+    model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy']
 
   def test_load_models_by_name(self):
@@ -167,8 +162,8 @@ class TestDbt:
         }
       }
     }
-    models = dbt_models(manifest, names=['users_copy_2'])
-    model_names = list(model_name(model) for model in models)
+    dbt = Dbt(manifest).filter(names=['users_copy_2'])
+    model_names = list(model.name for model in dbt.models)
     assert model_names == ['users_copy_2']
 
   def test_model(self):
@@ -192,6 +187,5 @@ class TestDbt:
         }
       }
     }
-    models = dbt_models(manifest)
-    model = dbt_model(models, 'users_copy_2')
-    assert model_name(model) == 'users_copy_2'
+    dbt = Dbt(manifest)
+    assert dbt.model('users_copy_2').name == 'users_copy_2'
