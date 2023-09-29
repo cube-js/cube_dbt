@@ -2,7 +2,7 @@ from cube_dbt.column import Column
 from cube_dbt.dump import dump
 
 class Model:
-  def __init__(self, model_dict) -> None:
+  def __init__(self, model_dict: dict) -> None:
     self._model_dict = model_dict
     self._columns = None
     self._primary_key = None
@@ -53,7 +53,7 @@ class Model:
     self._init_columns()
     return self._columns
   
-  def column(self, name) -> Column:
+  def column(self, name: str) -> Column:
     self._init_columns()
     return next(column for column in self._columns if column.name == name)
   

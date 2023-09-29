@@ -24,7 +24,7 @@ class Dbt:
       manifest = json.loads(file.read())
       return Dbt(manifest)
     
-  def filter(self, paths=[], tags=[], names=[]) -> 'Dbt':
+  def filter(self, paths: list[str]=[], tags: list[str]=[], names: list[str]=[]) -> 'Dbt':
     self.paths = paths
     self.tags = tags
     self.names = names
@@ -46,6 +46,6 @@ class Dbt:
     self._init_models()
     return self._models
   
-  def model(self, name) -> Model:
+  def model(self, name: str) -> Model:
     self._init_models()
     return next(model for model in self._models if model.name == name)

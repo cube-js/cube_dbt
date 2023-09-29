@@ -1,7 +1,7 @@
 from cube_dbt.dump import dump
 
 class Column:
-  def __init__(self, model_name: str, column_dict) -> None:
+  def __init__(self, model_name: str, column_dict: dict) -> None:
     self._model_name = model_name
     self._column_dict = column_dict
     pass
