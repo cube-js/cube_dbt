@@ -77,15 +77,16 @@ class Model:
     """
     return dump(self._as_cube(), indent=4)
   
-  def _as_dimensions(self) -> list:
+  def _as_dimensions(self, skip: list[str]=[]) -> list:
     return list(
       column._as_dimension()
       for column in self.columns
+      if column.name not in skip
     )
   
-  def as_dimensions(self) -> str:
+  def as_dimensions(self, skip: list[str]=[]) -> str:
     """
     For use in Jinja:
-    {{ dbt.model('name').as_dimensions() }}
+    {{ dbt.model('name').as_dimensions(skip=['id']) }}
     """
-    return dump(self._as_dimensions(), indent=6)
+    return dump(self._as_dimensions(skip), indent=6)

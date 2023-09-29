@@ -216,6 +216,35 @@ class TestModel:
       }
     ]
 
+  def test_as_dimensions_with_skipped_columns(self):
+    model_dict = {
+      'name': 'model',
+      'columns': {
+        'id': {
+          'name': 'id',
+          'description': '',
+          'meta': {},
+          'data_type': 'numeric',
+          'tags': []
+        },
+        'status': {
+          'name': 'status',
+          'description': '',
+          'meta': {},
+          'data_type': None,
+          'tags': []
+        }
+      }
+    }
+    model = Model(model_dict)
+    assert model._as_dimensions(skip=['id']) == [
+      {
+        'name': 'status',
+        'sql': 'status',
+        'type': 'string'
+      }
+    ]
+
   def test_as_dimensions_render(self):
     model_dict = {
       'name': 'model',

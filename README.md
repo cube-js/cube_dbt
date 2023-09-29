@@ -25,7 +25,7 @@ print(dbt.models)
 
 # For use in Jinja templates:
 print(dbt.model('name').as_cube())
-print(dbt.model('name').as_dimensions())
+print(dbt.model('name').as_dimensions(skip=['id']))
 print(dbt.model('name').column('name').as_dimension())
 ```
 
