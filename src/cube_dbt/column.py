@@ -27,13 +27,21 @@ class Column:
       return 'string'
     
     column_to_dimension_types = {
-      'bool': 'boolean',
+      'time': 'time',
       'date': 'time',
       'datetime': 'time',
-      'geography': 'geo',
-      'numeric': 'number',
+      'timestamp': 'time',
+
       'string': 'string',
-      'timestamp': 'time'
+
+      'number': 'number',
+      'numeric': 'number',
+
+      'boolean': 'boolean',
+      'bool': 'boolean',
+
+      'geo': 'geo',
+      'geography': 'geo',
     }
     if not self._column_dict['data_type'] in column_to_dimension_types:
       raise RuntimeError(f"Unknown column type of {self._model_name}.{self.name}: {self._column_dict['data_type']}")
