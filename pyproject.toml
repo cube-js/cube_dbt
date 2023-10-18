@@ -1,6 +1,6 @@
 [project]
 name = "cube_dbt"
-version = "0.5.3"
+version = "0.5.4"
 description = "dbt integration for Cube"
 authors = [
     {name = "Artyom Keydunov", email = "artyom@cube.dev"},

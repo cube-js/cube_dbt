@@ -89,4 +89,5 @@ class Model:
     For use in Jinja:
     {{ dbt.model('name').as_dimensions(skip=['id']) }}
     """
-    return dump(self._as_dimensions(skip), indent=6)
+    dimensions = self._as_dimensions(skip)
+    return dump(dimensions, indent=6) if dimensions else ''
