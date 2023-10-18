@@ -1,5 +1,5 @@
 from cube_dbt.column import Column
-from cube_dbt.dump import dump
+from cube_dbt.dump import dump, SafeString
 
 class Model:
   def __init__(self, model_dict: dict) -> None:
@@ -90,4 +90,4 @@ class Model:
     {{ dbt.model('name').as_dimensions(skip=['id']) }}
     """
     dimensions = self._as_dimensions(skip)
-    return dump(dimensions, indent=6) if dimensions else ''
+    return dump(dimensions, indent=6) if dimensions else SafeString('')
