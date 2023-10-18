@@ -277,3 +277,12 @@ class TestModel:
         sql: status
         type: string
       """
+
+  def test_as_dimensions_render_when_empty(self):
+    model_dict = {
+      'name': 'model',
+      'columns': {}
+    }
+
+    model = Model(model_dict)
+    assert model.as_dimensions() == ''
