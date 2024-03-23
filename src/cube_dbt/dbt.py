@@ -15,12 +15,12 @@ class Dbt:
         pass
 
     @staticmethod
-    def from_file(manifest_path: str, encoding=None) -> "Dbt":
+    def from_file(manifest_path: str, encoding: str = None) -> "Dbt":
         """Reads a DBT manifest.json file from local path
 
         Args:
             manifest_path (str): The path to the manifest file, read from the top-level directory of the Cube environment
-            encoding (_type_, optional): Encoding for the manifest.json file. Uses the system locale preferred encoding if not specified.
+            encoding (str, optional): Encoding for the manifest.json file. Uses the system locale preferred encoding if not specified.
 
         Returns:
             Dbt: Dbt manifest class to interact with in Cube
