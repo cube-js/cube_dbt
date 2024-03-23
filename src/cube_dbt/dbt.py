@@ -1,8 +1,10 @@
 import json
 import locale
 from urllib.request import urlopen
+
 from cube_dbt.model import Model
-    
+
+
 class Dbt:
   def __init__(self, manifest: dict) -> None:
     self.manifest = manifest
