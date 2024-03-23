@@ -54,14 +54,14 @@ class Dbt:
 
     def _init_models(self):
         if self._models == None:
-        self._models = list(
-            Model(node) for key, node in self.manifest['nodes'].items()
-            if node['resource_type'] == 'model' and
-            node['config']['materialized'] != 'ephemeral' and
-            (any(node['path'].startswith(path) for path in self.paths) if self.paths else True) and
-            all(tag in node['config']['tags'] for tag in self.tags) and
-            (node['name'] in self.names if self.names else True)
-        )
+            self._models = list(
+                Model(node) for key, node in self.manifest['nodes'].items()
+                if node['resource_type'] == 'model' and
+                node['config']['materialized'] != 'ephemeral' and
+                (any(node['path'].startswith(path) for path in self.paths) if self.paths else True) and
+                all(tag in node['config']['tags'] for tag in self.tags) and
+                (node['name'] in self.names if self.names else True)
+            )
     
     @property
     def models(self) -> list[Model]:
