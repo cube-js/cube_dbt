@@ -15,7 +15,34 @@ VALID_DIMENSION_TYPES = [
 # Other System's Type => Cube Type
 # See https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types
 BIGQUERY_TYPE_MAPPINGS = {
+  "array": "string",
   "bool": "boolean",
+  "bytes": "string",
+  "date": "time",
+  "datetime": "time",
+  "geography": "geo",
+  "interval": "string",
+  "json": "string",
+
+  # numeric types
+  "int64": "number",
+  "int": "number",
+  "smallint": "number",
+  "integer": "number",
+  "bigint": "number",
+  "tinyint": "number",
+  "byteint": "number",
+  "numeric": "number",
+  "decimal": "number",
+  "bignumeric": "number",
+  "bigdecimal": "number",
+  "float64": "number",
+
+  "range": "string",
+  # string does not need to be mapped
+  "struct": "string",
+  # time does not need to be mapped
+  "timestamp": "time",
 }
 # See https://docs.snowflake.com/en/sql-reference-data-types
 SNOWFLAKE_TYPE_MAPPINGS = {
@@ -108,7 +135,7 @@ class Column:
       return 'string'
 
     # Normalize the data_type value, downcasing it, and removing extra information.
-    source_data_type = re.sub(r"\([^\)]*\)", "", self._column_dict["data_type"].lower())
+    source_data_type = re.sub(r"<.*>", "", re.sub(r"\([^\)]*\)", "", self._column_dict["data_type"].lower()))
 
     if source_data_type in TYPE_MAPPINGS:
       cube_data_type = TYPE_MAPPINGS[source_data_type]

@@ -82,6 +82,16 @@ class TestColumn:
     column = Column('model', column_dict)
     assert column.type == 'string'
 
+  def test_known_bigquery_type_but_with_extra_info(self):
+    """
+    If type is known, then map it
+    """
+    column_dict = {
+      'data_type': 'ARRAY<STRUCT<ARRAY<INT64>>>'
+    }
+    column = Column('model', column_dict)
+    assert column.type == 'string'
+
   def test_as_dimension(self):
     column_dict = {
       'name': 'column',
