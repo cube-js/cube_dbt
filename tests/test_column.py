@@ -42,6 +42,46 @@ class TestColumn:
     column = Column('model', column_dict)
     assert column.type == 'number'
 
+  def test_known_type_but_uppercase(self):
+    """
+    If type is known, then map it
+    """
+    column_dict = {
+      'data_type': 'STRING'
+    }
+    column = Column('model', column_dict)
+    assert column.type == 'string'
+
+  def test_known_type_but_with_one_extra_info(self):
+    """
+    If type is known, then map it
+    """
+    column_dict = {
+      'data_type': 'timestamp(3)'
+    }
+    column = Column('model', column_dict)
+    assert column.type == 'time'
+
+  def test_known_type_but_with_two_extra_info(self):
+    """
+    If type is known, then map it
+    """
+    column_dict = {
+      'data_type': 'numeric(38,0)'
+    }
+    column = Column('model', column_dict)
+    assert column.type == 'number'
+
+  def test_known_type_but_with_two_extra_info_of_different_types(self):
+    """
+    If type is known, then map it
+    """
+    column_dict = {
+      'data_type': 'VECTOR(FLOAT, 256)'
+    }
+    column = Column('model', column_dict)
+    assert column.type == 'string'
+
   def test_as_dimension(self):
     column_dict = {
       'name': 'column',
