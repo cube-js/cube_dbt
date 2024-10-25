@@ -102,8 +102,93 @@ SNOWFLAKE_TYPE_MAPPINGS = {
   # Vector data types
   "vector": "string",
 }
+# See https://docs.aws.amazon.com/redshift/latest/dg/c_Supported_data_types.html
+REDSHIFT_TYPE_MAPPINGS = {
+  # Signed two-byte integer
+  "smallint": "number",
+  "int2": "number",
+
+  # Signed four-byte integer
+  "integer": "number",
+  "int": "number",
+  "int4": "number",
+
+  # Signed eight-byte integer
+  "bigint": "number",
+  "int8": "number",
+
+  # Exact numeric of selectable precision
+  "decimal": "number",
+  "numeric": "number",
+
+  # Single precision floating-point number
+  "real": "number",
+  "float4": "number",
+
+  # Double precision floating-point number
+  "double precision": "number",
+  "float8": "number",
+  "float": "number",
+
+  # Fixed-length character string
+  "char": "string",
+  "character": "string",
+  "nchar": "string",
+  "bpchar": "string",
+
+  # Variable-length character string with a user-defined limit
+  "varchar": "string",
+  "character varying": "string",
+  "nvarchar": "string",
+  "text": "string",
+
+  # Calendar date (year, month, day)
+  "date": "time",
+
+  # Time of day
+  "time": "time",
+  "time without time zone": "time",
+
+  # Time of day with time zone
+  "timetz": "time",
+  "time with time zone": "time",
+
+  # Date and time (without time zone)
+  "timestamp": "time",
+  "timestamp without time zone": "time",
+
+  # Date and time (with time zone)
+  "timestamptz": "time",
+  "timestamp with time zone": "time",
+
+  # Time duration in year to month order
+  "interval year to month": "string",
+
+  # Time duration in day to second order
+  "interval day to second": "string",
+
+  # Logical Boolean (true/false)
+  # boolean does not need to be mapped
+  "bool": "boolean",
+
+  # Type used with HyperLogLog sketches
+  "hllsketch": "string",
+
+  # A superset data type that encompasses all scalar types of Amazon Redshift including complex types such as ARRAY and STRUCTS
+  "super": "string",
+
+  # Variable-length binary value
+  "varbyte": "string",
+  "varbinary": "string",
+  "binary varying": "string",
+
+  # Spatial data
+  "geometry": "geo",
+  "geography": "string",
+}
 TYPE_MAPPINGS = {
   **BIGQUERY_TYPE_MAPPINGS,
+  **REDSHIFT_TYPE_MAPPINGS,
   **SNOWFLAKE_TYPE_MAPPINGS,
 }
 
