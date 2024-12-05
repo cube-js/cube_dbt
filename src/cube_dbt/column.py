@@ -244,6 +244,14 @@ class Column:
     """
     return 'primary_key' in self._column_dict['tags']
 
+  @property
+  def public(self) -> bool:
+    """
+    Convention: if the column is marked with the 'public' tag,
+    it will be mapped to a public dimension
+    """
+    return 'public' in self._column_dict['tags']
+
   def _as_dimension(self) -> dict:
     data = {}
     data['name'] = self.name
@@ -253,6 +261,8 @@ class Column:
     data['type'] = self.type
     if self.primary_key:
       data['primary_key'] = True
+    if self.public:
+      data['public'] = True
     if self.meta:
       data['meta'] = self.meta
     return data
