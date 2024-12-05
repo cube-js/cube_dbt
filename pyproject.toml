@@ -1,6 +1,6 @@
 [project]
 name = "cube_dbt"
-version = "0.6.0"
+dynamic = ["version"]
 description = "dbt integration for Cube"
 authors = [
     {name = "Artyom Keydunov", email = "artyom@cube.dev"},
@@ -13,14 +13,20 @@ requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}
 
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
-
-[tool.pdm.scripts]
-test = "pytest tests/"
-
-[tool.pdm.dev-dependencies]
-test = [
+[project.optional-dependencies]
+dev = [
     "pytest>=7.4.2",
 ]
+
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cube_dbt"]
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.uv-dynamic-versioning]
+pattern = "default-unprefixed"
