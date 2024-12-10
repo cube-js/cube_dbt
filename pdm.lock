@@ -3,10 +3,12 @@
 
 [metadata]
 groups = ["default", "test"]
-cross_platform = true
-static_urls = false
-lock_version = "4.3"
-content_hash = "sha256:00ecba403906006b241077d661576f3359a80d171b63a333e26d3480d7a543e6"
+strategy = ["cross_platform"]
+lock_version = "4.5.0"
+content_hash = "sha256:a589f1f5c7d1c0e5d8aebda64d675370839c23a9245f624cb9e694c86e77a473"
+
+[[metadata.targets]]
+requires_python = ">=3.8"
 
 [[package]]
 name = "colorama"
@@ -66,6 +68,7 @@ summary = "pytest: simple powerful testing with Python"
 dependencies = [
     "colorama; sys_platform == \"win32\"",
     "exceptiongroup>=1.0.0rc8; python_version < \"3.11\"",
+    "importlib-metadata>=0.12; python_version < \"3.8\"",
     "iniconfig",
     "packaging",
     "pluggy<2.0,>=0.12",
