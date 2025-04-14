@@ -36,3 +36,29 @@ Run tests:
 ```sh
 pdm run test
 ```
+
+## Preprocessing the `manifest.json` file
+
+For optimal performance, preprocessing the manifest file is recommended. The `cube_dbt` package only reads the `nodes` dictionary where resource_type is 'model'.
+Here's a list of all keys used by the `cube_dbt` package
+
+``` 
+- nodes
+  - name
+  - path
+  - description
+  - config
+    - materialized
+    - tags
+  - resource_type
+  - database
+  - schema
+  - alias
+  - relation_name
+  - columns
+    - name
+    - description
+    - data_type
+    - meta
+    - tags
+```
