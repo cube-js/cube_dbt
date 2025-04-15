@@ -39,8 +39,8 @@ pdm run test
 
 ## Preprocessing the `manifest.json` file
 
-For optimal performance, preprocessing the manifest file is recommended. The `cube_dbt` package only reads the `nodes` dictionary where resource_type is 'model'.
-Here's a list of all keys used by the `cube_dbt` package
+In case of a massive manifest file, it can be preprocessed for optimal performance. The `cube_dbt` package only reads the `nodes` dictionary where `resource_type` is `model`.
+Here's a list of all keys used by the `cube_dbt` package:
 
 ``` 
 - nodes
