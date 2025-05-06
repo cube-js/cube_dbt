@@ -19,16 +19,10 @@ class Model:
       self._detect_primary_key()
 
   def _detect_primary_key(self) -> None:
-    candidates = list(
+    self._primary_key = list(
       column for column in self._columns
       if column.primary_key
     )
-
-    if len(candidates) > 1:
-      column_names = list(column.name for column in candidates)
-      raise RuntimeError(f"More than one primary key column found in {self.name}: {', '.join(column_names)}")
-
-    self._primary_key = candidates[0] if len(candidates) == 1 else None
   
   @property
   def name(self) -> str:
@@ -58,7 +52,7 @@ class Model:
     return next(column for column in self._columns if column.name == name)
   
   @property
-  def primary_key(self) -> Column or None:
+  def primary_key(self) -> list[Column]:
     self._init_columns()
     return self._primary_key
 
