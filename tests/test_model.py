@@ -62,7 +62,7 @@ class TestModel:
       }
     }
     model = Model(model_dict)
-    assert model.primary_key == None
+    assert len(model.primary_key) == 0
 
   def test_detect_primary_key_one_column(self):
     """
@@ -87,8 +87,8 @@ class TestModel:
       }
     }
     model = Model(model_dict)
-    assert model.primary_key != None
-    assert model.primary_key.name == 'id'
+    assert len(model.primary_key) == 1
+    assert model.primary_key[0].name == "id"
 
   def test_detect_primary_key_two_columns(self):
     """
@@ -115,8 +115,9 @@ class TestModel:
       }
     }
     model = Model(model_dict)
-    with raises(RuntimeError):
-      model.primary_key
+    assert len(model.primary_key) == 2
+    assert model.primary_key[0].name is not None
+    assert model.primary_key[1].name is not None
 
   def test_as_cube(self):
     model_dict = {
@@ -286,3 +287,36 @@ class TestModel:
 
     model = Model(model_dict)
     assert model.as_dimensions() == ''
+
+  def test_as_dimensions_render_two_primary_keys(self):
+    model_dict = {
+        "name": "model",
+        "columns": {
+            "id": {
+                "name": "id",
+                "description": "",
+                "meta": {},
+                "data_type": "numeric",
+                "tags": ["primary_key"],
+            },
+            "status": {
+                "name": "status",
+                "description": "",
+                "meta": {},
+                "data_type": None,
+                "tags": ["primary_key"],
+            },
+        },
+    }
+    model = Model(model_dict)
+    assert (
+            model.as_dimensions() == """- name: id
+        sql: id
+        type: number
+        primary_key: true
+      - name: status
+        sql: status
+        type: string
+        primary_key: true
+      """
+    )
