@@ -14,7 +14,7 @@ class Dbt:
 
   @staticmethod
   def from_file(manifest_path: str) -> 'Dbt':
-    with open(manifest_path, 'r') as file:
+    with open(manifest_path, 'r', encoding='utf-8') as file:
       manifest = json.loads(file.read())
       return Dbt(manifest)
 
