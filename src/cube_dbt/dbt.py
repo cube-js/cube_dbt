@@ -1,4 +1,10 @@
-import json
+try:
+    import orjson as json
+    # orjson.loads() requires bytes, returns dict
+    _USE_ORJSON = True
+except ImportError:
+    import json
+    _USE_ORJSON = False
 
 from urllib.request import urlopen
 from cube_dbt.model import Model
@@ -15,15 +21,23 @@ class Dbt:
 
   @staticmethod
   def from_file(manifest_path: str) -> 'Dbt':
-    with open(manifest_path, 'r', encoding='utf-8') as file:
-      manifest = json.loads(file.read())
-      return Dbt(manifest)
+    if _USE_ORJSON:
+      with open(manifest_path, 'rb') as file:
+        manifest = json.loads(file.read())
+    else:
+      with open(manifest_path, 'r', encoding='utf-8') as file:
+        manifest = json.load(file)
+    return Dbt(manifest)
 
   @staticmethod
   def from_url(manifest_url: str) -> 'Dbt':
     with urlopen(manifest_url) as file:
-      manifest = json.loads(file.read())
-      return Dbt(manifest)
+      data = file.read()
+      if _USE_ORJSON:
+        manifest = json.loads(data)
+      else:
+        manifest = json.loads(data.decode('utf-8'))
+    return Dbt(manifest)
     
   def filter(self, paths: list[str]=[], tags: list[str]=[], names: list[str]=[]) -> 'Dbt':
     self.paths = paths
