@@ -67,7 +67,8 @@ tests/             - 34 unit tests, all passing
 Type mapping: BigQuery, Snowflake, Redshift → Cube types (number, string, time, boolean, geo)
 
 ## Dependencies
-- Production: PyYAML >= 6.0.1
+- Production: PyYAML >= 6.0.1, orjson >= 3.10.15
+  - Note: orjson is used for fast JSON parsing. If unavailable, the package may fall back to standard libraries.
 - Development: pytest >= 7.4.2
 - Python: >= 3.8
 
