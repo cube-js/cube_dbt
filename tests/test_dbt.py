@@ -189,3 +189,29 @@ class TestDbt:
     }
     dbt = Dbt(manifest)
     assert dbt.model('users_copy_2').name == 'users_copy_2'
+
+  def test_primary_key_detection_from_tests(self):
+    """
+    Integration test: Load manifest with test nodes and verify
+    primary key detection from unique+not_null tests
+    """
+    directory_path = os.path.dirname(os.path.realpath(__file__))
+    dbt = Dbt.from_file(directory_path + '/manifest.json')
+
+    # orders_copy should have id as primary key (from unique+not_null tests)
+    orders_model = dbt.model('orders_copy')
+    assert len(orders_model.primary_key) == 1
+    assert orders_model.primary_key[0].name == 'id'
+
+  def test_primary_key_detection_from_constraints(self):
+    """
+    Integration test: Load manifest and verify primary key detection
+    from model constraints
+    """
+    directory_path = os.path.dirname(os.path.realpath(__file__))
+    dbt = Dbt.from_file(directory_path + '/manifest.json')
+
+    # products_copy should have id as primary key (from constraints)
+    products_model = dbt.model('products_copy')
+    assert len(products_model.primary_key) == 1
+    assert products_model.primary_key[0].name == 'id'

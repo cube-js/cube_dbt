@@ -390,7 +390,35 @@
         "cube"
       ],
       "description": "",
-      "columns": {},
+      "columns": {
+        "id": {
+          "name": "id",
+          "description": "Product ID",
+          "meta": {},
+          "data_type": "integer",
+          "constraints": [],
+          "quote": null,
+          "tags": []
+        },
+        "name": {
+          "name": "name",
+          "description": "Product name",
+          "meta": {},
+          "data_type": "string",
+          "constraints": [],
+          "quote": null,
+          "tags": []
+        },
+        "price": {
+          "name": "price",
+          "description": "Product price",
+          "meta": {},
+          "data_type": "numeric",
+          "constraints": [],
+          "quote": null,
+          "tags": []
+        }
+      },
       "meta": {},
       "group": null,
       "docs": {
@@ -428,10 +456,123 @@
         "checksum": null
       },
       "access": "protected",
-      "constraints": [],
+      "constraints": [
+        {
+          "type": "primary_key",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
       "version": null,
       "latest_version": null,
       "deprecation_date": null
+    },
+    "test.jaffle_shop.unique_orders_copy_id": {
+      "database": "ecom",
+      "schema": "public_dbt_test__audit",
+      "name": "unique_orders_copy_id",
+      "resource_type": "test",
+      "package_name": "jaffle_shop",
+      "path": "unique_orders_copy_id.sql",
+      "original_file_path": "models/schema.yml",
+      "unique_id": "test.jaffle_shop.unique_orders_copy_id",
+      "fqn": [
+        "jaffle_shop",
+        "unique_orders_copy_id"
+      ],
+      "alias": "unique_orders_copy_id",
+      "checksum": {
+        "name": "none",
+        "checksum": ""
+      },
+      "config": {
+        "enabled": true,
+        "alias": null,
+        "schema": "dbt_test__audit",
+        "database": null,
+        "tags": [],
+        "meta": {},
+        "materialized": "test",
+        "severity": "ERROR",
+        "store_failures": null,
+        "where": null,
+        "limit": null,
+        "fail_calc": "count(*)",
+        "warn_if": "!= 0",
+        "error_if": "!= 0"
+      },
+      "tags": [],
+      "description": "",
+      "columns": {},
+      "meta": {},
+      "depends_on": {
+        "macros": [],
+        "nodes": [
+          "model.jaffle_shop.orders_copy"
+        ]
+      },
+      "test_metadata": {
+        "name": "unique",
+        "kwargs": {
+          "column_name": "id",
+          "model": "{{ get_where_subquery(ref('orders_copy')) }}"
+        },
+        "namespace": null
+      }
+    },
+    "test.jaffle_shop.not_null_orders_copy_id": {
+      "database": "ecom",
+      "schema": "public_dbt_test__audit",
+      "name": "not_null_orders_copy_id",
+      "resource_type": "test",
+      "package_name": "jaffle_shop",
+      "path": "not_null_orders_copy_id.sql",
+      "original_file_path": "models/schema.yml",
+      "unique_id": "test.jaffle_shop.not_null_orders_copy_id",
+      "fqn": [
+        "jaffle_shop",
+        "not_null_orders_copy_id"
+      ],
+      "alias": "not_null_orders_copy_id",
+      "checksum": {
+        "name": "none",
+        "checksum": ""
+      },
+      "config": {
+        "enabled": true,
+        "alias": null,
+        "schema": "dbt_test__audit",
+        "database": null,
+        "tags": [],
+        "meta": {},
+        "materialized": "test",
+        "severity": "ERROR",
+        "store_failures": null,
+        "where": null,
+        "limit": null,
+        "fail_calc": "count(*)",
+        "warn_if": "!= 0",
+        "error_if": "!= 0"
+      },
+      "tags": [],
+      "description": "",
+      "columns": {},
+      "meta": {},
+      "depends_on": {
+        "macros": [],
+        "nodes": [
+          "model.jaffle_shop.orders_copy"
+        ]
+      },
+      "test_metadata": {
+        "name": "not_null",
+        "kwargs": {
+          "column_name": "id",
+          "model": "{{ get_where_subquery(ref('orders_copy')) }}"
+        },
+        "namespace": null
+      }
     }
   },
   "sources": {},
