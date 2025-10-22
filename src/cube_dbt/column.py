@@ -194,9 +194,10 @@ TYPE_MAPPINGS = {
 
 
 class Column:
-  def __init__(self, model_name: str, column_dict: dict) -> None:
+  def __init__(self, model_name: str, column_dict: dict, tests: list = None) -> None:
     self._model_name = model_name
     self._column_dict = column_dict
+    self._tests = tests or []
     pass
   
   def __repr__(self) -> str:
@@ -239,10 +240,20 @@ class Column:
   @property
   def primary_key(self) -> bool:
     """
-    Convention: if the column is marked with the 'primary_key' tag,
-    it will be mapped to a primary key dimension
+    Detects if a column is a primary key using multiple methods:
+    1. Column tagged with 'primary_key' tag (legacy cube_dbt convention)
+    2. Column has both 'unique' and 'not_null' tests (standard dbt convention)
+    3. Column has 'primary_key' constraint (checked at model level)
     """
-    return 'primary_key' in self._column_dict['tags']
+    # Method 1: Check for 'primary_key' tag (legacy approach)
+    if 'primary_key' in self._column_dict['tags']:
+      return True
+
+    # Method 2: Check for unique + not_null tests (standard dbt approach)
+    if 'unique' in self._tests and 'not_null' in self._tests:
+      return True
+
+    return False
 
   def _as_dimension(self) -> dict:
     data = {}
