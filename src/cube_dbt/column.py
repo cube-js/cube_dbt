@@ -186,10 +186,89 @@ REDSHIFT_TYPE_MAPPINGS = {
   "geometry": "geo",
   "geography": "string",
 }
+# See https://clickhouse.com/docs/sql-reference/data-types
+CLICKHOUSE_TYPE_MAPPINGS = {
+  # common data types
+  "Bool": "boolean",
+  "String": "string",
+  "JSON": "string",
+
+  # time data types
+  "Date": "time",
+  "Date32": "time",
+  "DateTime": "time",
+  "DateTime32": "time",
+  "DateTime64": "time",
+  "Time": "time",
+  "Time64": "time",
+
+  # numeric data types
+  "Decimal": "number",
+  "Decimal128": "number",
+  "Decimal256": "number",
+  "Decimal32": "number",
+  "Decimal64": "number",
+  "Float32": "number",
+  "Float64": "number",
+  "Int128": "number",
+  "Int16": "number",
+  "Int256": "number",
+  "Int32": "number",
+  "Int64": "number",
+  "Int8": "number",
+  "IntervalDay": "number",
+  "IntervalHour": "number",
+  "IntervalMicrosecond": "number",
+  "IntervalMillisecond": "number",
+  "IntervalMinute": "number",
+  "IntervalMonth": "number",
+  "IntervalNanosecond": "number",
+  "IntervalQuarter": "number",
+  "IntervalSecond": "number",
+  "IntervalWeek": "number",
+  "IntervalYear": "number",
+  "UInt128": "number",
+  "UInt16": "number",
+  "UInt256": "number",
+  "UInt32": "number",
+  "UInt64": "number",
+  "UInt8": "number",
+
+  # specialized types
+  "AggregateFunction": "string",
+  "Array": "string",
+  "BFloat16": "string",
+  "Dynamic": "string",
+  "Enum": "string",
+  "Enum16": "string",
+  "Enum8": "string",
+  "FixedString": "string",
+  "Geometry": "string",
+  "IPv4": "string",
+  "IPv6": "string",
+  "LineString": "string",
+  "LowCardinality": "string",
+  "Map": "string",
+  "MultiLineString": "string",
+  "MultiPolygon": "string",
+  "Nested": "string",
+  "Nothing": "string",
+  "Nullable": "string",
+  "Point": "string",
+  "Polygon": "string",
+  "QBit": "string",
+  "Ring": "string",
+  "SimpleAggregateFunction": "string",
+  "Tuple": "string",
+  "UUID": "string",
+  "Variant": "string"
+}
+
 TYPE_MAPPINGS = {
   **BIGQUERY_TYPE_MAPPINGS,
   **REDSHIFT_TYPE_MAPPINGS,
   **SNOWFLAKE_TYPE_MAPPINGS,
+  **CLICKHOUSE_TYPE_MAPPINGS
 }
 
 
