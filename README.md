@@ -1,6 +1,14 @@
 # cube_dbt
 
-`cube_dbt` is the dbt integration for [Cube](https://cube.dev) that helps define the data model of the semantic layer on top of dbt models.
+> [!WARNING]
+> **`cube_dbt` is deprecated.** Projects that already use it keep working, but it gets no new features, and the cubes it renders differ from the ones Cube's [dbt pull](https://docs.cube.dev/docs/integrations/dbt) generates.
+>
+> To generate cubes from dbt models, use dbt pull instead:
+>
+> - **Cube CLI:** [`cube dbt sync`](https://docs.cube.dev/reference/cli#dbt-sync) commits the generated cubes to a branch for review; [`cube dbt generate`](https://docs.cube.dev/reference/cli#generate-cubes-without-committing-them) writes them to your own repository.
+> - **Platform API:** the [dbt Sync endpoints](https://docs.cube.dev/api-reference/dbt-sync/start-a-dbt-sync-for-a-deployment) start a sync from your own tooling.
+
+`cube_dbt` is a Python package for [Cube](https://cube.dev) that helps define the data model of the semantic layer on top of dbt models.
 
 ## Installation
 
